@@ -13,8 +13,7 @@ A real-time water quality monitoring system designed to measure TDS, pH, and Tur
 4. [Usage](#usage)
 5. [Directory Structure](#directory-structure)
 6. [Contributing](#contributing)
-7. [License](#license)
-8. [Contact](#contact)
+7. [Contact](#contact)
 
 ## Features
 * Continuous monitoring of Total Dissolved Solids, pH, and Turbidity.
@@ -60,9 +59,6 @@ platformio.ini      # Build configuration
 ## Contributing
 Contributions are welcome. Please open an issue or submit a pull request for major changes.
 
-## License
-This project is licensed under the MIT License.
-
 ## Contact
 Developed by Achmad Miftahurrojak.
 GitHub: [hamin-baek](https://github.com/hamin-baek)
@@ -70,3 +66,4 @@ GitHub: [hamin-baek](https://github.com/hamin-baek)
 ***
 **Description:** Real-time ESP32 based water quality monitoring system.
 **Tags:** esp32, water-quality, hardware
+
