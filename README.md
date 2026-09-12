@@ -1,34 +1,72 @@
 # Water Quality Monitor
 
-Real-time water quality monitoring system designed for community access to clean water. This device measures Total Dissolved Solids (TDS), pH, and Turbidity using an ESP32 microcontroller. It logs data to an SD card for historical tracking and provides local visual and audio feedback.
+A real-time water quality monitoring system designed to measure TDS, pH, and Turbidity levels for community water access.
+
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![Platform: ESP32](https://img.shields.io/badge/Platform-ESP32-lightgrey.svg)
+![Language: C++](https://img.shields.io/badge/Language-C++-red.svg)
+
+## Table of Contents
+1. [Features](#features)
+2. [Hardware Requirements](#hardware-requirements)
+3. [Getting Started](#getting-started)
+4. [Usage](#usage)
+5. [Directory Structure](#directory-structure)
+6. [Contributing](#contributing)
+7. [License](#license)
+8. [Contact](#contact)
 
 ## Features
-
-*   **Real-time Monitoring:** Continuously tracks TDS, pH, and Turbidity levels.
-*   **Data Filtering:** Implements a rolling average algorithm to smooth out sensor noise and prevent false positives.
-*   **Local Display:** Uses a 16x2 I2C LCD to display metrics locally.
-*   **Alert System:** Triggers an active buzzer if water quality falls below safe thresholds.
-*   **Data Logging:** Automatically appends readings to a CSV file on a MicroSD card every 10 seconds.
+* Continuous monitoring of Total Dissolved Solids, pH, and Turbidity.
+* Rolling average algorithm implementation to filter sensor noise.
+* Real-time local metrics display via an I2C 16x2 LCD.
+* Active buzzer activation when safe thresholds are exceeded.
+* Automatic data logging to a CSV file on a MicroSD card every 10 seconds.
 
 ## Hardware Requirements
+* ESP32 Development Board
+* Analog TDS Sensor
+* Analog pH Sensor
+* Analog Turbidity Sensor
+* 16x2 I2C LCD
+* MicroSD Card Module (SPI)
+* Active Buzzer
 
-*   ESP32 Development Board
-*   Analog TDS Sensor
-*   Analog pH Sensor
-*   Analog Turbidity Sensor
-*   16x2 I2C LCD
-*   MicroSD Card Module (SPI)
-*   Active Buzzer
+## Getting Started
 
-## Software Stack
+### Prerequisites
+* PlatformIO extension installed in Visual Studio Code.
+* USB cable for serial communication and flashing.
 
-*   **Environment:** PlatformIO / Arduino framework
-*   **Language:** C++
-*   **Libraries:** `Wire`, `LiquidCrystal_I2C`, `SPI`, `SD`
+### Installation
+```bash
+git clone https://github.com/hamin-baek/water-quality-monitor.git
+cd water-quality-monitor
+pio run --target upload
+```
 
-## Setup Instructions
+## Usage
+Provide 5V and GND to the sensors and connect the analog outputs to the designated ESP32 pins. The device will automatically initialize the SD card, start the rolling average calculations, and display the metrics on the LCD.
 
-1.  Open the project in PlatformIO.
-2.  Install the required dependencies listed in `platformio.ini`.
-3.  Upload the firmware to your ESP32 board.
-4.  Ensure the SD card is formatted to FAT32 before inserting it into the module.
+## Directory Structure
+```text
+src/
+  main.cpp          # Main firmware logic
+include/            # Header files
+lib/                # Project specific libraries
+platformio.ini      # Build configuration
+```
+
+## Contributing
+Contributions are welcome. Please open an issue or submit a pull request for major changes.
+
+## License
+This project is licensed under the MIT License.
+
+## Contact
+Developed by Achmad Miftahurrojak.
+GitHub: [hamin-baek](https://github.com/hamin-baek)
+
+***
+**Description:** Real-time ESP32 based water quality monitoring system.
+**Tags:** esp32, water-quality, hardware
