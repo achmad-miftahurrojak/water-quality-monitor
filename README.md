@@ -61,6 +61,10 @@ pio run -t upload
 
 Calibrate the sensor constants in the local configuration before relying on measurements. Keep private values in a local secrets header based on <code>src/secrets.example.h</code>.
 
+## Field calibration
+
+Calibrate each probe against a known reference solution before collecting readings. Record the calibration values in the local configuration and repeat the check after changing probes, wiring, or the analog power supply.
+
 ## Project layout
 
 ```text
