@@ -2,7 +2,7 @@
 
 # Water Quality Monitor
 
-<a href="README.md"><img alt="English" src="https://img.shields.io/badge/English-DFE0E5"></a> <a href="README.id.md"><img alt="Bahasa Indonesia" src="https://img.shields.io/badge/Bahasa%20Indonesia-DFE0E5"></a> <a href="README.ko.md"><img alt="한국어" src="https://img.shields.io/badge/%ED%95%9C%EA%B5%AD%EC%96%B4-DFE0E5"></a>
+<a href="../README.md"><img alt="English" src="https://img.shields.io/badge/English-DFE0E5"></a> <a href="README_ID.md"><img alt="Bahasa Indonesia" src="https://img.shields.io/badge/Bahasa%20Indonesia-DFE0E5"></a> <a href="README_KR.md"><img alt="한국어" src="https://img.shields.io/badge/%ED%95%9C%EA%B5%AD%EC%96%B4-DFE0E5"></a>
 
 <img alt="C++" src="https://img.shields.io/badge/C%2B%2B-11-00599C?logo=c%2B%2B&logoColor=white"> <img alt="ESP32" src="https://img.shields.io/badge/ESP32-E7352C?logo=espressif&logoColor=white"> <img alt="PlatformIO" src="https://img.shields.io/badge/PlatformIO-F56600?logo=platformio&logoColor=white">
 
@@ -26,7 +26,7 @@
 
 ## 아키텍처
 
-데이터 흐름과 설정 경계는 [ARCHITECTURE.md](ARCHITECTURE.md)에서 확인할 수 있습니다.
+데이터 흐름과 설정 경계는 [ARCHITECTURE.md](../ARCHITECTURE.md)에서 확인할 수 있습니다.
 
 ## 빌드 및 업로드
 
@@ -50,4 +50,5 @@
 
 ## 라이선스
 
-[MIT](LICENSE) · [GitHub 프로필](https://github.com/achmad-miftahurrojak)
+[MIT](../LICENSE) · [GitHub 프로필](https://github.com/achmad-miftahurrojak)
+
