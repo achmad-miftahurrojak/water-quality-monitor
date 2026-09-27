@@ -5,11 +5,13 @@
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
 #include <Update.h>
+#include <mbedtls/sha256.h>
+#include "alerts.h"
 
 #if __has_include("secrets.h")
   #include "secrets.h"
 #else
-  #error "File secrets.h not found! Copy src/secrets.example.h to src/secrets.h and fill in your credentials."
+  #include "secrets.example.h"
 #endif
 
 static WiFiClientSecure secureClient;
@@ -42,7 +44,6 @@ bool connectWiFi() {
 
     if (WiFi.status() == WL_CONNECTED) {
         Serial.printf("WiFi Connected! IP: %s\n", WiFi.localIP().toString().c_str());
-        secureClient.setInsecure();
         return true;
     }
 
@@ -53,6 +54,13 @@ bool connectWiFi() {
 bool connectMQTT() {
     if (mqttClient.connected()) return true;
     if (WiFi.status() != WL_CONNECTED) return false;
+
+#if defined(MQTT_ROOT_CA)
+    secureClient.setCACert(MQTT_ROOT_CA);
+#else
+    Serial.println("MQTT disabled: MQTT_ROOT_CA is not configured.");
+    return false;
+#endif
 
     char clientId[24];
     snprintf(clientId, sizeof(clientId), "WQM-%08X", (uint32_t)esp_random());
@@ -87,7 +95,11 @@ bool publishTelemetry(SensorData data, float batteryVoltage, uint32_t timestamp)
     doc["turb"]   = serialized(String(data.turbidity, 1));
     doc["ph"]     = serialized(String(data.ph, 2));
     doc["batt_v"] = serialized(String(batteryVoltage, 2));
-    doc["alert"]  = data.isError;
+    doc["alert"]  = data.isError ||
+                     data.tds > THRESHOLD_TDS_HIGH ||
+                     data.turbidity > THRESHOLD_TURBIDITY_HIGH ||
+                     data.ph < THRESHOLD_PH_LOW ||
+                     data.ph > THRESHOLD_PH_HIGH;
 
     char buffer[256];
     size_t len = serializeJson(doc, buffer);
@@ -116,10 +128,14 @@ bool publishAlert(SensorData data, const char* reason, uint32_t timestamp) {
 void checkForUpdates() {
     if (WiFi.status() != WL_CONNECTED) return;
 
+#if !defined(OTA_ROOT_CA) || !defined(OTA_FIRMWARE_SHA256)
+    Serial.println("OTA disabled: TLS CA and firmware SHA-256 are required.");
+    return;
+#else
     Serial.printf("Checking OTA update at: %s\n", OTA_FIRMWARE_URL);
 
     HTTPClient http;
-    secureClient.setInsecure();
+    secureClient.setCACert(OTA_ROOT_CA);
     http.setTimeout(10000);
 
     if (!http.begin(secureClient, OTA_FIRMWARE_URL)) {
@@ -145,9 +161,37 @@ void checkForUpdates() {
             return;
         }
 
-        size_t written = Update.writeStream(http.getStream());
+        WiFiClient* stream = http.getStreamPtr();
+        mbedtls_sha256_context sha256;
+        mbedtls_sha256_init(&sha256);
+        mbedtls_sha256_starts_ret(&sha256, 0);
+        uint8_t buffer[1024];
+        size_t written = 0;
+        while (http.connected() && written < (size_t)contentLength) {
+            size_t available = stream->available();
+            if (available == 0) {
+                delay(1);
+                continue;
+            }
+            size_t toRead = min(available, sizeof(buffer));
+            int readBytes = stream->readBytes(buffer, toRead);
+            if (readBytes <= 0) break;
+            if (Update.write(buffer, readBytes) != (size_t)readBytes) break;
+            mbedtls_sha256_update_ret(&sha256, buffer, readBytes);
+            written += readBytes;
+        }
+        uint8_t digest[32];
+        mbedtls_sha256_finish_ret(&sha256, digest);
+        mbedtls_sha256_free(&sha256);
 
-        if (written != (size_t)contentLength) {
+        char actualHash[65];
+        for (size_t i = 0; i < sizeof(digest); i++) {
+            snprintf(actualHash + (i * 2), 3, "%02x", digest[i]);
+        }
+        actualHash[64] = '\0';
+
+        if (written != (size_t)contentLength ||
+            !String(actualHash).equalsIgnoreCase(OTA_FIRMWARE_SHA256)) {
             Serial.printf("OTA: Download incomplete (%d/%d bytes)\n", written, contentLength);
             Update.abort();
             http.end();
@@ -168,4 +212,5 @@ void checkForUpdates() {
     }
 
     http.end();
+#endif
 }

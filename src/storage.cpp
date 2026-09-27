@@ -8,7 +8,7 @@
 #if __has_include("secrets.h")
   #include "secrets.h"
 #else
-  #error "File secrets.h not found!"
+  #include "secrets.example.h"
 #endif
 
 static RTC_DS3231 rtc;

@@ -23,6 +23,7 @@
 #define MQTT_PORT     8883              
 #define MQTT_USER    "USERNAME_ADAFRUIT"
 #define MQTT_PASS    "AIO_KEY_KAMU"
+#define MQTT_ROOT_CA "-----BEGIN CERTIFICATE-----\\nPASTE_BROKER_ROOT_CA_HERE\\n-----END CERTIFICATE-----\\n"
 
 
 
@@ -36,5 +37,6 @@
 
 
 #define OTA_FIRMWARE_URL  "https://example.com/firmware/wqm_latest.bin"
+// #define OTA_FIRMWARE_SHA256 "64-character-lowercase-sha256-hash"
 
 #endif 
