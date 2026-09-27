@@ -61,7 +61,7 @@ Contributions are welcome. Please open an issue or submit a pull request for maj
 
 ## Contact
 Developed by Achmad Miftahurrojak.
-GitHub: [hamin-baek](https://github.com/hamin-baek)
+GitHub: [achmad-miftahurrojak](https://github.com/achmad-miftahurrojak)
 
 ***
 **Description:** Real-time ESP32 based water quality monitoring system.
