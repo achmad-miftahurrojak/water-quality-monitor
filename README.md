@@ -9,7 +9,7 @@ An embedded monitoring solution for continuous real-time analysis of water param
 ## Table of Contents
 
 1. [Features](#features)
-2. [Screenshot](#screenshot)
+2. [Architecture](#architecture)
 3. [Getting Started](#getting-started)
 4. [Usage](#usage)
 5. [Directory Structure](#directory-structure)
@@ -25,9 +25,9 @@ An embedded monitoring solution for continuous real-time analysis of water param
 - Real-Time Display: Local readout via an I2C LCD interface for immediate metric verification.
 - Turborepo Integration: Structured for fast, cached firmware builds.
 
-## Screenshot
+## Architecture
 
-![Sensor Array Prototype](https://via.placeholder.com/800x450?text=Sensor+Array+Prototype)
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the hardware and firmware data flow.
 
 ## Getting Started
 
@@ -40,7 +40,7 @@ An embedded monitoring solution for continuous real-time analysis of water param
 ### Installation Steps
 
 ```bash
-git clone https://github.com/hamin-baek/hamin-baek.git
+git clone https://github.com/achmad-miftahurrojak/water-quality-monitor.git
 cd hardware/water-quality-monitor
 npm install
 ```
@@ -81,4 +81,4 @@ This project is licensed under the MIT License.
 ## Contact
 
 Created by Achmad Miftahurrojak.
-[GitHub](https://github.com/hamin-baek)
+[GitHub](https://github.com/achmad-miftahurrojak)
